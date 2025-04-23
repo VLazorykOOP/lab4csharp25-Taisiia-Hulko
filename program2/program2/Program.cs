@@ -76,6 +76,12 @@ class VectorULong
         num_vec++;
     }
 
+ ~VectorULong()
+ {
+     Console.WriteLine("Деструктор викликано для VectorULong з розміром: " + size);
+     num_vec--;
+ }
+    
     public void Input()
     {
         Console.WriteLine("Введіть елементи вектора:");

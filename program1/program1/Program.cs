@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 class DRomb
 {
@@ -67,8 +67,7 @@ class DRomb
         };
     }
 
-    // Індексатор для доступу до полів по індексу
-    public int this[int index]  //індексатор. клас ромба тепер поводиться як масив
+    public int this[int index]  
     {
         get
         {
@@ -92,48 +91,41 @@ class DRomb
         }
     }
 
-    // Перевантаження операції ++(інкремент)
     public static DRomb operator ++(DRomb r) 
     {
-        r.d1++; // Збільшуємо d1 на 1
+        r.d1++; 
         r.d2++;
         return r;
     }
 
-    // Перевантаження операції --(декремент)
     public static DRomb operator --(DRomb r)
     {
-        r.d1--; // Зменшуємо d1 на 1
+        r.d1--; 
         r.d2--;
         return r;
     }
 
-    // Перевантаження true
     public static bool operator true(DRomb r) => r.d1 == r.d2; 
 
-    // Перевантаження false
     public static bool operator false(DRomb r) => r.d1 != r.d2;
 
-    // Перевантаження операції +
-    public static DRomb operator +(DRomb r, int scalar) //додавання скалярного значення
+    public static DRomb operator +(DRomb r, int scalar) 
     {
         return new DRomb(r.d1 + scalar, r.d2 + scalar, r.color);
     }
 
-    // Перетворення DRomb у string
     public static explicit operator string(DRomb r)
     {
-        return $"{r.d1},{r.d2},{r.color}";
+        return $"{r.d1},{r.d2},{r.color}"; 
     }
 
-    // Перетворення string у DRomb
-    public static explicit operator DRomb(string s)
+    public static explicit operator DRomb(string s) 
     {
         var parts = s.Split(',');
-        if (parts.Length != 3)
+        if (parts.Length != 3) 
             throw new FormatException("Неправильний формат для перетворення в DRomb");
 
-        int d1 = int.Parse(parts[0]);
+        int d1 = int.Parse(parts[0]); 
         int d2 = int.Parse(parts[1]);
         int color = int.Parse(parts[2]);
 

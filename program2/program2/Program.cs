@@ -76,11 +76,6 @@ class VectorULong
         num_vec++;
     }
 
-    ~VectorULong()
-    {
-        Console.WriteLine("Вектор знищено.");
-    }
-
     public void Input()
     {
         Console.WriteLine("Введіть елементи вектора:");
@@ -134,7 +129,6 @@ class VectorULong
 
     public static bool operator true(VectorULong v)
     {
-        if (v.size == 0) return false;
         foreach (var val in v.IntArray)
             if (val != 0) return true;
         return false;
@@ -147,7 +141,9 @@ class VectorULong
 
     public static bool operator !(VectorULong v)
     {
-        return v.size == 0;
+        foreach (var val in v.IntArray)
+            if (val != 0) return false;
+        return true;
     }
 
     public static VectorULong operator ~(VectorULong v)
@@ -170,15 +166,25 @@ class VectorULong
         return result;
     }
 
+    private static void CopyRemaining(VectorULong result, VectorULong source, int start)
+    {
+        for (int i = start; i < result.size; i++)
+        {
+            result.IntArray[i] = source.IntArray[i];
+        }
+    }
+
     public static VectorULong operator +(VectorULong v1, VectorULong v2)
     {
         uint minSize = Math.Min(v1.size, v2.size);
         uint maxSize = Math.Max(v1.size, v2.size);
         VectorULong result = new VectorULong(maxSize);
         for (int i = 0; i < minSize; i++)
-        {
             result.IntArray[i] = v1.IntArray[i] + v2.IntArray[i];
-        }
+
+        if (v1.size > v2.size) CopyRemaining(result, v1, (int)minSize);
+        else CopyRemaining(result, v2, (int)minSize);
+
         return result;
     }
 
@@ -190,9 +196,10 @@ class VectorULong
         uint maxSize = Math.Max(v1.size, v2.size);
         VectorULong result = new VectorULong(maxSize);
         for (int i = 0; i < minSize; i++)
-        {
             result.IntArray[i] = v1.IntArray[i] - v2.IntArray[i];
-        }
+
+        if (v1.size > v2.size) CopyRemaining(result, v1, (int)minSize);
+
         return result;
     }
 
@@ -204,9 +211,11 @@ class VectorULong
         uint maxSize = Math.Max(v1.size, v2.size);
         VectorULong result = new VectorULong(maxSize);
         for (int i = 0; i < minSize; i++)
-        {
             result.IntArray[i] = v1.IntArray[i] * v2.IntArray[i];
-        }
+
+        if (v1.size > v2.size) CopyRemaining(result, v1, (int)minSize);
+        else CopyRemaining(result, v2, (int)minSize);
+
         return result;
     }
 
@@ -218,9 +227,8 @@ class VectorULong
         uint maxSize = Math.Max(v1.size, v2.size);
         VectorULong result = new VectorULong(maxSize);
         for (int i = 0; i < minSize; i++)
-        {
             result.IntArray[i] = v2.IntArray[i] != 0 ? v1.IntArray[i] / v2.IntArray[i] : 0;
-        }
+
         return result;
     }
 
@@ -232,9 +240,8 @@ class VectorULong
         uint maxSize = Math.Max(v1.size, v2.size);
         VectorULong result = new VectorULong(maxSize);
         for (int i = 0; i < minSize; i++)
-        {
             result.IntArray[i] = v2.IntArray[i] != 0 ? v1.IntArray[i] % v2.IntArray[i] : 0;
-        }
+
         return result;
     }
 
@@ -246,9 +253,11 @@ class VectorULong
         uint maxSize = Math.Max(v1.size, v2.size);
         VectorULong result = new VectorULong(maxSize);
         for (int i = 0; i < minSize; i++)
-        {
             result.IntArray[i] = v1.IntArray[i] | v2.IntArray[i];
-        }
+
+        if (v1.size > v2.size) CopyRemaining(result, v1, (int)minSize);
+        else CopyRemaining(result, v2, (int)minSize);
+
         return result;
     }
 
@@ -274,7 +283,10 @@ class VectorULong
 
     public override int GetHashCode()
     {
-        return IntArray.GetHashCode();
+        int hash = 17;
+        foreach (var val in IntArray)
+            hash = hash * 31 + val.GetHashCode();
+        return hash;
     }
 
     public static void Test()

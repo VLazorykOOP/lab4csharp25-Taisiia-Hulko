@@ -4,30 +4,25 @@ class Program
 {
     static void Main(string[] args)
     {
-        // Викликаємо метод тестування класу VectorULong
         VectorULong.Test();
     }
 }
 
 class VectorULong
 {
-    // Поля
-    protected ulong[] IntArray; // масив елементів
-    protected uint size; // розмір вектора
-    protected int codeError; // код помилки(1 - помилка індексації, 0 - все ок)
-    protected static uint num_vec = 0; // кількість векторів
+    protected ulong[] IntArray;
+    protected uint size;
+    protected int codeError;
+    protected static uint num_vec = 0;
 
-    // Властивість для розміру (тільки читання)
     public uint Size => size;
 
-    // Властивість для codeError (читання і запис помилки)
     public int CodeError
     {
         get { return codeError; }
         set { codeError = value; }
     }
 
-    // Індексатор: доступ для елементів за індексом з перевіркою меж
     public ulong this[int index]
     {
         get
@@ -57,7 +52,6 @@ class VectorULong
         }
     }
 
-    // Конструктор без параметрів. створення вектора з одним елементом 0
     public VectorULong()
     {
         size = 1;
@@ -66,7 +60,6 @@ class VectorULong
         num_vec++;
     }
 
-    // Конструктор з параметром (заданий розмір нулями)
     public VectorULong(uint s)
     {
         size = s;
@@ -75,7 +68,6 @@ class VectorULong
         num_vec++;
     }
 
-    // Конструктор з розміром і значенням
     public VectorULong(uint s, ulong initVal)
     {
         size = s;
@@ -84,13 +76,11 @@ class VectorULong
         num_vec++;
     }
 
-    // Деструктор: повідомлення про знищення вектора
     ~VectorULong()
     {
         Console.WriteLine("Вектор знищено.");
     }
 
-    // Метод введення елементів
     public void Input()
     {
         Console.WriteLine("Введіть елементи вектора:");
@@ -101,7 +91,6 @@ class VectorULong
         }
     }
 
-    // Метод виведення елементів
     public void Output()
     {
         Console.Write("Вектор: ");
@@ -112,7 +101,6 @@ class VectorULong
         Console.WriteLine();
     }
 
-    // Метод присвоєння всім елементам значення
     public void Assign(ulong value)
     {
         for (int i = 0; i < size; i++)
@@ -121,13 +109,11 @@ class VectorULong
         }
     }
 
-    // Статичний метод — скільки векторів створено
     public static uint GetVectorCount()
     {
         return num_vec;
     }
 
-    // Перевантаження унарного ++ ( збільшує кожен елемент на 1)
     public static VectorULong operator ++(VectorULong v)
     {
         for (int i = 0; i < v.size; i++)
@@ -137,7 +123,6 @@ class VectorULong
         return v;
     }
 
-    // Перевантаження унарного -- ( зменшує кожен елемент на 1)
     public static VectorULong operator --(VectorULong v)
     {
         for (int i = 0; i < v.size; i++)
@@ -147,7 +132,6 @@ class VectorULong
         return v;
     }
 
-    // Перевантаження true(якщо size > 0 або елементи не 0)/false
     public static bool operator true(VectorULong v)
     {
         if (v.size == 0) return false;
@@ -156,19 +140,16 @@ class VectorULong
         return false;
     }
 
-    //Перевантаження false
     public static bool operator false(VectorULong v)
     {
         return !(v);
     }
 
-    // Перевантаження логічного заперечння ! 
     public static bool operator !(VectorULong v)
     {
         return v.size == 0;
     }
 
-    // Перевантаження побітового заперечення ~
     public static VectorULong operator ~(VectorULong v)
     {
         VectorULong result = new VectorULong(v.size);
@@ -179,8 +160,6 @@ class VectorULong
         return result;
     }
 
-    // Перевантаження арифметичних операцій
-    // Додавання
     public static VectorULong operator +(VectorULong v1, VectorULong v2)
     {
         uint minSize = Math.Min(v1.size, v2.size);
@@ -192,7 +171,6 @@ class VectorULong
         return result;
     }
 
-    // Віднімання
     public static VectorULong operator -(VectorULong v1, VectorULong v2)
     {
         uint minSize = Math.Min(v1.size, v2.size);
@@ -204,7 +182,6 @@ class VectorULong
         return result;
     }
 
-    // Множення
     public static VectorULong operator *(VectorULong v1, VectorULong v2)
     {
         uint minSize = Math.Min(v1.size, v2.size);
@@ -216,7 +193,6 @@ class VectorULong
         return result;
     }
 
-    // Ділення
     public static VectorULong operator /(VectorULong v1, VectorULong v2)
     {
         uint minSize = Math.Min(v1.size, v2.size);
@@ -228,7 +204,6 @@ class VectorULong
         return result;
     }
 
-    // Операція побітового OR
     public static VectorULong operator |(VectorULong v1, VectorULong v2)
     {
         uint minSize = Math.Min(v1.size, v2.size);
@@ -240,7 +215,6 @@ class VectorULong
         return result;
     }
 
-    // Метод тестування
     public static void Test()
     {
         VectorULong v1 = new VectorULong(3, 5);
@@ -258,7 +232,6 @@ class VectorULong
 
         Console.WriteLine("Кількість векторів: " + VectorULong.GetVectorCount());
 
-        // Тестування арифметичних операцій
         VectorULong v3 = v1 + v2;
         v3.Output();
 
@@ -271,7 +244,6 @@ class VectorULong
         VectorULong v6 = v1 / v2;
         v6.Output();
 
-        // Тестування побітових операцій
         VectorULong v7 = v1 | v2;
         v7.Output();
     }

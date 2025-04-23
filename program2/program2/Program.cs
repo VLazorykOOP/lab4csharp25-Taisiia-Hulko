@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 
 class Program
 {
@@ -160,10 +160,21 @@ class VectorULong
         return result;
     }
 
+    private static VectorULong ElementwiseOperation(VectorULong v, ulong scalar, Func<ulong, ulong, ulong> op)
+    {
+        VectorULong result = new VectorULong(v.size);
+        for (int i = 0; i < v.size; i++)
+        {
+            result.IntArray[i] = op(v.IntArray[i], scalar);
+        }
+        return result;
+    }
+
     public static VectorULong operator +(VectorULong v1, VectorULong v2)
     {
         uint minSize = Math.Min(v1.size, v2.size);
-        VectorULong result = new VectorULong(minSize);
+        uint maxSize = Math.Max(v1.size, v2.size);
+        VectorULong result = new VectorULong(maxSize);
         for (int i = 0; i < minSize; i++)
         {
             result.IntArray[i] = v1.IntArray[i] + v2.IntArray[i];
@@ -171,10 +182,13 @@ class VectorULong
         return result;
     }
 
+    public static VectorULong operator +(VectorULong v, ulong scalar) => ElementwiseOperation(v, scalar, (a, b) => a + b);
+
     public static VectorULong operator -(VectorULong v1, VectorULong v2)
     {
         uint minSize = Math.Min(v1.size, v2.size);
-        VectorULong result = new VectorULong(minSize);
+        uint maxSize = Math.Max(v1.size, v2.size);
+        VectorULong result = new VectorULong(maxSize);
         for (int i = 0; i < minSize; i++)
         {
             result.IntArray[i] = v1.IntArray[i] - v2.IntArray[i];
@@ -182,10 +196,13 @@ class VectorULong
         return result;
     }
 
+    public static VectorULong operator -(VectorULong v, ulong scalar) => ElementwiseOperation(v, scalar, (a, b) => a - b);
+
     public static VectorULong operator *(VectorULong v1, VectorULong v2)
     {
         uint minSize = Math.Min(v1.size, v2.size);
-        VectorULong result = new VectorULong(minSize);
+        uint maxSize = Math.Max(v1.size, v2.size);
+        VectorULong result = new VectorULong(maxSize);
         for (int i = 0; i < minSize; i++)
         {
             result.IntArray[i] = v1.IntArray[i] * v2.IntArray[i];
@@ -193,10 +210,13 @@ class VectorULong
         return result;
     }
 
+    public static VectorULong operator *(VectorULong v, ulong scalar) => ElementwiseOperation(v, scalar, (a, b) => a * b);
+
     public static VectorULong operator /(VectorULong v1, VectorULong v2)
     {
         uint minSize = Math.Min(v1.size, v2.size);
-        VectorULong result = new VectorULong(minSize);
+        uint maxSize = Math.Max(v1.size, v2.size);
+        VectorULong result = new VectorULong(maxSize);
         for (int i = 0; i < minSize; i++)
         {
             result.IntArray[i] = v2.IntArray[i] != 0 ? v1.IntArray[i] / v2.IntArray[i] : 0;
@@ -204,15 +224,57 @@ class VectorULong
         return result;
     }
 
+    public static VectorULong operator /(VectorULong v, ulong scalar) => ElementwiseOperation(v, scalar, (a, b) => b != 0 ? a / b : 0);
+
+    public static VectorULong operator %(VectorULong v1, VectorULong v2)
+    {
+        uint minSize = Math.Min(v1.size, v2.size);
+        uint maxSize = Math.Max(v1.size, v2.size);
+        VectorULong result = new VectorULong(maxSize);
+        for (int i = 0; i < minSize; i++)
+        {
+            result.IntArray[i] = v2.IntArray[i] != 0 ? v1.IntArray[i] % v2.IntArray[i] : 0;
+        }
+        return result;
+    }
+
+    public static VectorULong operator %(VectorULong v, ulong scalar) => ElementwiseOperation(v, scalar, (a, b) => b != 0 ? a % b : 0);
+
     public static VectorULong operator |(VectorULong v1, VectorULong v2)
     {
         uint minSize = Math.Min(v1.size, v2.size);
-        VectorULong result = new VectorULong(minSize);
+        uint maxSize = Math.Max(v1.size, v2.size);
+        VectorULong result = new VectorULong(maxSize);
         for (int i = 0; i < minSize; i++)
         {
             result.IntArray[i] = v1.IntArray[i] | v2.IntArray[i];
         }
         return result;
+    }
+
+    public static bool operator ==(VectorULong v1, VectorULong v2)
+    {
+        if (v1.size != v2.size) return false;
+        for (int i = 0; i < v1.size; i++)
+        {
+            if (v1.IntArray[i] != v2.IntArray[i]) return false;
+        }
+        return true;
+    }
+
+    public static bool operator !=(VectorULong v1, VectorULong v2)
+    {
+        return !(v1 == v2);
+    }
+
+    public override bool Equals(object obj)
+    {
+        return obj is VectorULong other && this == other;
+    }
+
+    public override int GetHashCode()
+    {
+        return IntArray.GetHashCode();
     }
 
     public static void Test()
@@ -244,7 +306,18 @@ class VectorULong
         VectorULong v6 = v1 / v2;
         v6.Output();
 
-        VectorULong v7 = v1 | v2;
+        VectorULong v7 = v1 % v2;
         v7.Output();
+
+        VectorULong v8 = v1 | v2;
+        v8.Output();
+
+        VectorULong v9 = v1 + 10;
+        v9.Output();
+
+        VectorULong v10 = v1 * 3;
+        v10.Output();
+
+        Console.WriteLine("v1 == v2: " + (v1 == v2));
     }
 }

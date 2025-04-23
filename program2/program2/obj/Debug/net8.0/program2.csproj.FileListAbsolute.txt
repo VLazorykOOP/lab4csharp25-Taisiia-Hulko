@@ -1,0 +1,14 @@
+C:\Users\mu qing\source\repos\lab4csharp25-Taisiia-Hulko\program2\program2\obj\Debug\net8.0\program2.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\mu qing\source\repos\lab4csharp25-Taisiia-Hulko\program2\program2\obj\Debug\net8.0\program2.AssemblyInfoInputs.cache
+C:\Users\mu qing\source\repos\lab4csharp25-Taisiia-Hulko\program2\program2\obj\Debug\net8.0\program2.AssemblyInfo.cs
+C:\Users\mu qing\source\repos\lab4csharp25-Taisiia-Hulko\program2\program2\obj\Debug\net8.0\program2.csproj.CoreCompileInputs.cache
+C:\Users\mu qing\source\repos\lab4csharp25-Taisiia-Hulko\program2\program2\bin\Debug\net8.0\program2.exe
+C:\Users\mu qing\source\repos\lab4csharp25-Taisiia-Hulko\program2\program2\bin\Debug\net8.0\program2.deps.json
+C:\Users\mu qing\source\repos\lab4csharp25-Taisiia-Hulko\program2\program2\bin\Debug\net8.0\program2.runtimeconfig.json
+C:\Users\mu qing\source\repos\lab4csharp25-Taisiia-Hulko\program2\program2\bin\Debug\net8.0\program2.dll
+C:\Users\mu qing\source\repos\lab4csharp25-Taisiia-Hulko\program2\program2\bin\Debug\net8.0\program2.pdb
+C:\Users\mu qing\source\repos\lab4csharp25-Taisiia-Hulko\program2\program2\obj\Debug\net8.0\program2.dll
+C:\Users\mu qing\source\repos\lab4csharp25-Taisiia-Hulko\program2\program2\obj\Debug\net8.0\refint\program2.dll
+C:\Users\mu qing\source\repos\lab4csharp25-Taisiia-Hulko\program2\program2\obj\Debug\net8.0\program2.pdb
+C:\Users\mu qing\source\repos\lab4csharp25-Taisiia-Hulko\program2\program2\obj\Debug\net8.0\program2.genruntimeconfig.cache
+C:\Users\mu qing\source\repos\lab4csharp25-Taisiia-Hulko\program2\program2\obj\Debug\net8.0\ref\program2.dll

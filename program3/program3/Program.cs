@@ -1,7 +1,8 @@
-﻿using System;
+using System;
 
 class MatrixUlong
 {
+    // Захищені поля
     protected ulong[,] ULArray;
     protected uint n, m;
     protected int codeError;
@@ -158,6 +159,85 @@ class MatrixUlong
                 result.ULArray[i, j] = ~mat.ULArray[i, j];
         return result;
     }
+
+    // Бінарні арифметичні оператори
+    public static MatrixUlong operator +(MatrixUlong a, MatrixUlong b)
+    {
+        MatrixUlong result = new MatrixUlong(a.n, a.m);
+        for (int i = 0; i < a.n; i++)
+            for (int j = 0; j < a.m; j++)
+                result[i, j] = a[i, j] + b[i, j];
+        return result;
+    }
+
+    public static MatrixUlong operator -(MatrixUlong a, MatrixUlong b)
+    {
+        MatrixUlong result = new MatrixUlong(a.n, a.m);
+        for (int i = 0; i < a.n; i++)
+            for (int j = 0; j < a.m; j++)
+                result[i, j] = a[i, j] - b[i, j];
+        return result;
+    }
+
+    public static MatrixUlong operator *(MatrixUlong a, MatrixUlong b)
+    {
+        MatrixUlong result = new MatrixUlong(a.n, a.m);
+        for (int i = 0; i < a.n; i++)
+            for (int j = 0; j < a.m; j++)
+                result[i, j] = a[i, j] * b[i, j];
+        return result;
+    }
+
+    public static MatrixUlong operator /(MatrixUlong a, MatrixUlong b)
+    {
+        MatrixUlong result = new MatrixUlong(a.n, a.m);
+        for (int i = 0; i < a.n; i++)
+            for (int j = 0; j < a.m; j++)
+                result[i, j] = b[i, j] != 0 ? a[i, j] / b[i, j] : 0;
+        return result;
+    }
+
+    public static MatrixUlong operator %(MatrixUlong a, MatrixUlong b)
+    {
+        MatrixUlong result = new MatrixUlong(a.n, a.m);
+        for (int i = 0; i < a.n; i++)
+            for (int j = 0; j < a.m; j++)
+                result[i, j] = b[i, j] != 0 ? a[i, j] % b[i, j] : 0;
+        return result;
+    }
+
+    // Порівняння
+    public static bool operator ==(MatrixUlong a, MatrixUlong b)
+    {
+        if (a.n != b.n || a.m != b.m) return false;
+        for (int i = 0; i < a.n; i++)
+            for (int j = 0; j < a.m; j++)
+                if (a[i, j] != b[i, j]) return false;
+        return true;
+    }
+
+    public static bool operator !=(MatrixUlong a, MatrixUlong b) => !(a == b);
+
+    public static bool operator >(MatrixUlong a, MatrixUlong b)
+    {
+        ulong sumA = 0, sumB = 0;
+        for (int i = 0; i < a.n; i++)
+            for (int j = 0; j < a.m; j++)
+                sumA += a[i, j];
+        for (int i = 0; i < b.n; i++)
+            for (int j = 0; j < b.m; j++)
+                sumB += b[i, j];
+        return sumA > sumB;
+    }
+
+    public static bool operator <(MatrixUlong a, MatrixUlong b) => b > a;
+
+    public static bool operator >=(MatrixUlong a, MatrixUlong b) => !(a < b);
+
+    public static bool operator <=(MatrixUlong a, MatrixUlong b) => !(a > b);
+
+    public override bool Equals(object obj) => base.Equals(obj);
+    public override int GetHashCode() => base.GetHashCode();
 }
 
 class Program
@@ -166,6 +246,7 @@ class Program
     {
         MatrixUlong m1 = new MatrixUlong(2, 2, 5);
         m1.Output();
+
         Console.WriteLine("After ++:");
         m1++;
         m1.Output();

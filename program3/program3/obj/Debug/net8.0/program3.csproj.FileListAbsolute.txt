@@ -1,0 +1,14 @@
+C:\Users\mu qing\Desktop\uni\2nd_year\2\крос-платформне\lab4\lab4csharp25-Taisiia-Hulko\program3\program3\bin\Debug\net8.0\program3.exe
+C:\Users\mu qing\Desktop\uni\2nd_year\2\крос-платформне\lab4\lab4csharp25-Taisiia-Hulko\program3\program3\bin\Debug\net8.0\program3.deps.json
+C:\Users\mu qing\Desktop\uni\2nd_year\2\крос-платформне\lab4\lab4csharp25-Taisiia-Hulko\program3\program3\bin\Debug\net8.0\program3.runtimeconfig.json
+C:\Users\mu qing\Desktop\uni\2nd_year\2\крос-платформне\lab4\lab4csharp25-Taisiia-Hulko\program3\program3\bin\Debug\net8.0\program3.dll
+C:\Users\mu qing\Desktop\uni\2nd_year\2\крос-платформне\lab4\lab4csharp25-Taisiia-Hulko\program3\program3\bin\Debug\net8.0\program3.pdb
+C:\Users\mu qing\Desktop\uni\2nd_year\2\крос-платформне\lab4\lab4csharp25-Taisiia-Hulko\program3\program3\obj\Debug\net8.0\program3.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\mu qing\Desktop\uni\2nd_year\2\крос-платформне\lab4\lab4csharp25-Taisiia-Hulko\program3\program3\obj\Debug\net8.0\program3.AssemblyInfoInputs.cache
+C:\Users\mu qing\Desktop\uni\2nd_year\2\крос-платформне\lab4\lab4csharp25-Taisiia-Hulko\program3\program3\obj\Debug\net8.0\program3.AssemblyInfo.cs
+C:\Users\mu qing\Desktop\uni\2nd_year\2\крос-платформне\lab4\lab4csharp25-Taisiia-Hulko\program3\program3\obj\Debug\net8.0\program3.csproj.CoreCompileInputs.cache
+C:\Users\mu qing\Desktop\uni\2nd_year\2\крос-платформне\lab4\lab4csharp25-Taisiia-Hulko\program3\program3\obj\Debug\net8.0\program3.dll
+C:\Users\mu qing\Desktop\uni\2nd_year\2\крос-платформне\lab4\lab4csharp25-Taisiia-Hulko\program3\program3\obj\Debug\net8.0\refint\program3.dll
+C:\Users\mu qing\Desktop\uni\2nd_year\2\крос-платформне\lab4\lab4csharp25-Taisiia-Hulko\program3\program3\obj\Debug\net8.0\program3.pdb
+C:\Users\mu qing\Desktop\uni\2nd_year\2\крос-платформне\lab4\lab4csharp25-Taisiia-Hulko\program3\program3\obj\Debug\net8.0\program3.genruntimeconfig.cache
+C:\Users\mu qing\Desktop\uni\2nd_year\2\крос-платформне\lab4\lab4csharp25-Taisiia-Hulko\program3\program3\obj\Debug\net8.0\ref\program3.dll

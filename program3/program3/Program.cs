@@ -70,7 +70,10 @@ public class MatrixUlong
         num_m++;
     }
 
-    ~MatrixUlong() { }
+~MatrixUlong() 
+{
+    Console.WriteLine($"Матриця {n}x{m} знищена.");
+}
 
     public void Input()
     {

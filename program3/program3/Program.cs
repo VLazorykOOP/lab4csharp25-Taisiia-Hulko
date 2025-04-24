@@ -1,22 +1,55 @@
 using System;
 
-class MatrixUlong
+public class MatrixUlong
 {
-    // Захищені поля
-    protected ulong[,] ULArray;
-    protected uint n, m;
-    protected int codeError;
-    protected static int num_m = 0;
+    private ulong[,] ULArray;
+    private int n, m;
+    private int codeError;
+    private static int num_m = 0;
 
     public MatrixUlong()
     {
-        n = m = 1;
-        ULArray = new ulong[1, 1];
-        ULArray[0, 0] = 0;
+        n = 0;
+        m = 0;
+        ULArray = new ulong[0, 0];
+        codeError = 0;
         num_m++;
     }
+    //метод для введення елемента матриці
+    public void InputElement(int row, int col)
+    {
+        if (row >= 0 && row < n && col >= 0 && col < m)
+        {
+            Console.Write($"Введіть елемент [{row},{col}]: ");
+            ULArray[row, col] = ulong.Parse(Console.ReadLine());
+            codeError = 0;
+        }
+        else
+        {
+            Console.WriteLine("Помилка: індекси поза межами матриці.");
+            codeError = 1;
+        }
+    }
 
-    public MatrixUlong(uint rows, uint cols)
+    public void InputElement(int index)
+    {
+        int row = index / m;
+        int col = index % m;
+        if (row >= 0 && row < n && col >= 0 && col < m)
+        {
+            Console.Write($"Введіть елемент за індексом {index} (тобто [{row},{col}]): ");
+            ULArray[row, col] = ulong.Parse(Console.ReadLine());
+            codeError = 0;
+        }
+        else
+        {
+            Console.WriteLine("Помилка: індекс поза межами матриці.");
+            codeError = 1;
+        }
+    }
+
+
+    public MatrixUlong(int rows, int cols)
     {
         n = rows;
         m = cols;
@@ -25,29 +58,33 @@ class MatrixUlong
         num_m++;
     }
 
-    public MatrixUlong(uint rows, uint cols, ulong initValue)
+    public MatrixUlong(int rows, int cols, ulong defaultValue)
     {
         n = rows;
         m = cols;
         ULArray = new ulong[n, m];
         for (int i = 0; i < n; i++)
             for (int j = 0; j < m; j++)
-                ULArray[i, j] = initValue;
+                ULArray[i, j] = defaultValue;
         codeError = 0;
         num_m++;
     }
 
-    ~MatrixUlong()
-    {
-        Console.WriteLine("Matrix destroyed");
-    }
+    ~MatrixUlong() { }
 
     public void Input()
     {
-        Console.WriteLine("Enter matrix elements:");
+        Console.Write("Введіть кількість рядків: ");
+        n = int.Parse(Console.ReadLine());
+        Console.Write("Введіть кількість стовпців: ");
+        m = int.Parse(Console.ReadLine());
+        ULArray = new ulong[n, m];
         for (int i = 0; i < n; i++)
             for (int j = 0; j < m; j++)
+            {
+                Console.Write($"ULArray[{i},{j}] = ");
                 ULArray[i, j] = ulong.Parse(Console.ReadLine());
+            }
     }
 
     public void Output()
@@ -55,7 +92,7 @@ class MatrixUlong
         for (int i = 0; i < n; i++)
         {
             for (int j = 0; j < m; j++)
-                Console.Write(ULArray[i, j] + " ");
+                Console.Write($"{ULArray[i, j],6}");
             Console.WriteLine();
         }
     }
@@ -69,8 +106,8 @@ class MatrixUlong
 
     public static int CountMatrices() => num_m;
 
-    public uint Rows => n;
-    public uint Columns => m;
+    public int Rows => n;
+    public int Columns => m;
 
     public int CodeError
     {
@@ -84,15 +121,14 @@ class MatrixUlong
         {
             if (i >= 0 && i < n && j >= 0 && j < m)
                 return ULArray[i, j];
-            codeError = -1;
+            codeError = 1;
             return 0;
         }
         set
         {
             if (i >= 0 && i < n && j >= 0 && j < m)
                 ULArray[i, j] = value;
-            else
-                codeError = -1;
+            else codeError = 1;
         }
     }
 
@@ -100,113 +136,103 @@ class MatrixUlong
     {
         get
         {
-            int i = k / (int)m;
-            int j = k % (int)m;
+            int i = k / m;
+            int j = k % m;
             if (i >= 0 && i < n && j >= 0 && j < m)
                 return ULArray[i, j];
-            codeError = -1;
+            codeError = 1;
             return 0;
         }
         set
         {
-            int i = k / (int)m;
-            int j = k % (int)m;
+            int i = k / m;
+            int j = k % m;
             if (i >= 0 && i < n && j >= 0 && j < m)
                 ULArray[i, j] = value;
-            else
-                codeError = -1;
+            else codeError = 1;
         }
     }
 
-    public static MatrixUlong operator ++(MatrixUlong mat)
+    // ++ --
+    public static MatrixUlong operator ++(MatrixUlong a)
     {
-        for (int i = 0; i < mat.n; i++)
-            for (int j = 0; j < mat.m; j++)
-                mat.ULArray[i, j]++;
-        return mat;
+        for (int i = 0; i < a.n; i++)
+            for (int j = 0; j < a.m; j++)
+                a.ULArray[i, j]++;
+        return a;
     }
 
-    public static MatrixUlong operator --(MatrixUlong mat)
+    public static MatrixUlong operator --(MatrixUlong a)
     {
-        for (int i = 0; i < mat.n; i++)
-            for (int j = 0; j < mat.m; j++)
-                mat.ULArray[i, j]--;
-        return mat;
+        for (int i = 0; i < a.n; i++)
+            for (int j = 0; j < a.m; j++)
+                a.ULArray[i, j]--;
+        return a;
     }
 
-    public static bool operator true(MatrixUlong mat)
+    // true / false
+    public static bool operator true(MatrixUlong a)
     {
-        if (mat.n == 0 || mat.m == 0) return false;
-        for (int i = 0; i < mat.n; i++)
-            for (int j = 0; j < mat.m; j++)
-                if (mat.ULArray[i, j] != 0)
-                    return true;
+        foreach (ulong el in a.ULArray)
+            if (el != 0) return true;
         return false;
     }
 
-    public static bool operator false(MatrixUlong mat) => !(mat);
-
-    public static bool operator !(MatrixUlong mat)
+    public static bool operator false(MatrixUlong a)
     {
-        return mat.n == 0 || mat.m == 0;
+        foreach (ulong el in a.ULArray)
+            if (el != 0) return false;
+        return true;
     }
 
-    public static MatrixUlong operator ~(MatrixUlong mat)
-    {
-        MatrixUlong result = new MatrixUlong(mat.n, mat.m);
-        for (int i = 0; i < mat.n; i++)
-            for (int j = 0; j < mat.m; j++)
-                result.ULArray[i, j] = ~mat.ULArray[i, j];
-        return result;
-    }
-
-    // Бінарні арифметичні оператори
-    public static MatrixUlong operator +(MatrixUlong a, MatrixUlong b)
+    // !
+    public static MatrixUlong operator !(MatrixUlong a)
     {
         MatrixUlong result = new MatrixUlong(a.n, a.m);
         for (int i = 0; i < a.n; i++)
             for (int j = 0; j < a.m; j++)
-                result[i, j] = a[i, j] + b[i, j];
+                result[i, j] = a[i, j] == 0 ? 1u : 0u;
         return result;
     }
 
-    public static MatrixUlong operator -(MatrixUlong a, MatrixUlong b)
+    // ~
+    public static MatrixUlong operator ~(MatrixUlong a)
     {
         MatrixUlong result = new MatrixUlong(a.n, a.m);
         for (int i = 0; i < a.n; i++)
             for (int j = 0; j < a.m; j++)
-                result[i, j] = a[i, j] - b[i, j];
+                result[i, j] = ~a[i, j];
         return result;
     }
 
-    public static MatrixUlong operator *(MatrixUlong a, MatrixUlong b)
+    // арифметика між матрицями
+    private static MatrixUlong BinOp(MatrixUlong a, MatrixUlong b, Func<ulong, ulong, ulong> op)
     {
-        MatrixUlong result = new MatrixUlong(a.n, a.m);
+        if (a.n != b.n || a.m != b.m) return a;
+        MatrixUlong res = new MatrixUlong(a.n, a.m);
         for (int i = 0; i < a.n; i++)
             for (int j = 0; j < a.m; j++)
-                result[i, j] = a[i, j] * b[i, j];
-        return result;
+                res[i, j] = op(a[i, j], b[i, j]);
+        return res;
     }
 
-    public static MatrixUlong operator /(MatrixUlong a, MatrixUlong b)
-    {
-        MatrixUlong result = new MatrixUlong(a.n, a.m);
-        for (int i = 0; i < a.n; i++)
-            for (int j = 0; j < a.m; j++)
-                result[i, j] = b[i, j] != 0 ? a[i, j] / b[i, j] : 0;
-        return result;
-    }
+    public static MatrixUlong operator +(MatrixUlong a, MatrixUlong b) => BinOp(a, b, (x, y) => x + y);
+    public static MatrixUlong operator -(MatrixUlong a, MatrixUlong b) => BinOp(a, b, (x, y) => x - y);
+    public static MatrixUlong operator *(MatrixUlong a, MatrixUlong b) => BinOp(a, b, (x, y) => x * y);
+    public static MatrixUlong operator /(MatrixUlong a, MatrixUlong b) => BinOp(a, b, (x, y) => y != 0 ? x / y : 0);
+    public static MatrixUlong operator %(MatrixUlong a, MatrixUlong b) => BinOp(a, b, (x, y) => y != 0 ? x % y : 0);
 
-    public static MatrixUlong operator %(MatrixUlong a, MatrixUlong b)
-    {
-        MatrixUlong result = new MatrixUlong(a.n, a.m);
-        for (int i = 0; i < a.n; i++)
-            for (int j = 0; j < a.m; j++)
-                result[i, j] = b[i, j] != 0 ? a[i, j] % b[i, j] : 0;
-        return result;
-    }
+    // з ulong
+    public static MatrixUlong operator +(MatrixUlong a, ulong b) => BinOp(a, new MatrixUlong(a.n, a.m, b), (x, y) => x + y);
+    public static MatrixUlong operator +(ulong b, MatrixUlong a) => a + b;
 
-    // Порівняння
+    public static MatrixUlong operator -(MatrixUlong a, ulong b) => BinOp(a, new MatrixUlong(a.n, a.m, b), (x, y) => x - y);
+    public static MatrixUlong operator -(ulong b, MatrixUlong a) => BinOp(a, new MatrixUlong(a.n, a.m, b), (y, x) => x - y);
+
+    public static MatrixUlong operator *(MatrixUlong a, ulong b) => BinOp(a, new MatrixUlong(a.n, a.m, b), (x, y) => x * y);
+    public static MatrixUlong operator /(MatrixUlong a, ulong b) => BinOp(a, new MatrixUlong(a.n, a.m, b), (x, y) => y != 0 ? x / y : 0);
+
+    // порівняння
     public static bool operator ==(MatrixUlong a, MatrixUlong b)
     {
         if (a.n != b.n || a.m != b.m) return false;
@@ -220,37 +246,68 @@ class MatrixUlong
 
     public static bool operator >(MatrixUlong a, MatrixUlong b)
     {
-        ulong sumA = 0, sumB = 0;
-        for (int i = 0; i < a.n; i++)
-            for (int j = 0; j < a.m; j++)
-                sumA += a[i, j];
-        for (int i = 0; i < b.n; i++)
-            for (int j = 0; j < b.m; j++)
-                sumB += b[i, j];
-        return sumA > sumB;
+        for (int i = 0; i < Math.Min(a.n, b.n); i++)
+            for (int j = 0; j < Math.Min(a.m, b.m); j++)
+                if (!(a[i, j] > b[i, j])) return false;
+        return true;
     }
 
-    public static bool operator <(MatrixUlong a, MatrixUlong b) => b > a;
+    public static bool operator <(MatrixUlong a, MatrixUlong b)
+    {
+        for (int i = 0; i < Math.Min(a.n, b.n); i++)
+            for (int j = 0; j < Math.Min(a.m, b.m); j++)
+                if (!(a[i, j] < b[i, j])) return false;
+        return true;
+    }
 
-    public static bool operator >=(MatrixUlong a, MatrixUlong b) => !(a < b);
+    public static bool operator >=(MatrixUlong a, MatrixUlong b) => (a > b) || (a == b);
+    public static bool operator <=(MatrixUlong a, MatrixUlong b) => (a < b) || (a == b);
 
-    public static bool operator <=(MatrixUlong a, MatrixUlong b) => !(a > b);
+    // побітові
+    public static MatrixUlong operator |(MatrixUlong a, MatrixUlong b) => BinOp(a, b, (x, y) => x | y);
+    public static MatrixUlong operator ^(MatrixUlong a, MatrixUlong b) => BinOp(a, b, (x, y) => x ^ y);
+    public static MatrixUlong operator >>(MatrixUlong a, int shift) => BinOp(a, new MatrixUlong(a.n, a.m, (ulong)shift), (x, y) => x >> (int)y);
+    public static MatrixUlong operator <<(MatrixUlong a, int shift) => BinOp(a, new MatrixUlong(a.n, a.m, (ulong)shift), (x, y) => x << (int)y);
 
-    public override bool Equals(object obj) => base.Equals(obj);
-    public override int GetHashCode() => base.GetHashCode();
+    public override bool Equals(object obj) => obj is MatrixUlong other && this == other;
+    public override int GetHashCode() => ULArray.GetHashCode();
 }
 
+// Тестова програма
 class Program
 {
     static void Main()
     {
-        MatrixUlong m1 = new MatrixUlong(2, 2, 5);
-        m1.Output();
+        MatrixUlong A = new MatrixUlong(2, 2, 10);
+        MatrixUlong B = new MatrixUlong(2, 2, 5);
 
-        Console.WriteLine("After ++:");
-        m1++;
-        m1.Output();
+        Console.WriteLine("Matrix A:");
+        A.Output();
 
-        Console.WriteLine("Matrix Count: " + MatrixUlong.CountMatrices());
+        Console.WriteLine("Matrix B:");
+        B.Output();
+
+        Console.WriteLine("A + B:");
+        (A + B).Output();
+
+        Console.WriteLine("A * 2:");
+        (A * 2).Output();
+
+        Console.WriteLine("A == B: " + (A == B));
+        Console.WriteLine("A > B: " + (A > B));
+
+        Console.WriteLine("~A:");
+        (~A).Output();
+
+        Console.WriteLine("A | B:");
+        (A | B).Output();
+
+        Console.WriteLine("!A:");
+        (!A).Output();
+
+        Console.WriteLine("A after ++:");
+        (++A).Output();
+
+        Console.WriteLine($"Матриць створено: {MatrixUlong.CountMatrices()}");
     }
 }
